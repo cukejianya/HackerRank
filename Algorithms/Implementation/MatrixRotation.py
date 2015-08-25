@@ -9,25 +9,32 @@ for i in range(M):
 
 def rotate_matrix(matrix, matrix_length, row_length):
     new_matrix = []
-    for i, original_row in enumerate(matrix):
-        row = [x for x in original_row]
-        maxlen = matrix_length-1
-        #print row
-        #print matrix[i+1][row_length-1]
-        if not i == maxlen:
-            del row[0]
-            if i < 0:
-                row.insert(row_length-2, matrix[i+1][row_length-1])
+    smallest = min(matrix_length, row_length)
+    for circle in range(smallest/2):
+        new_matrix.append([])
+        if not cicle == 0:
+        for i, original_row in enumerate(matrix):
+            if i == 0 or i == matrix_length-1:
+                row = [x for x in original_row]
+                if i == 0:
+                    new_matrix[0]+= row
+                else:
+                    index = matrix_length - 2
+                    index = len(new_matrix[0]) - index
+                    for x in row[::-1]:
+                        new_matrix[0].insert(index, x)
+                        index += 1
             else:
-                row.append(row_length-2, matrix[i+1][row_length-1])
-        print matrix
-        #print matrix[i-1][0]
-        if not i == 0:
-            del row[row_length-1]
-            row = [matrix[i-1][0]]+row
-        new_matrix.append(row)
-    return new_matrix
+                for j, elm in enumerate(original_row):
+                    length = len(original_row) - 1
+                    length = row_length+length//2
+                    if j == 0:
+                        new_matrix[0].insert(length, elm)
+                    if j == len(original_row) - 1:
+                        length += 1
+                        new_matrix[0].insert(length, elm)
 
+    return new_matrix
 print matrix
 for row in rotate_matrix(matrix, M, N):
     print row
