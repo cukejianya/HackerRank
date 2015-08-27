@@ -12,7 +12,18 @@ def rotate_matrix(matrix, matrix_length, row_length):
     smallest = min(matrix_length, row_length)
     for circle in range(smallest/2):
         new_matrix.append([])
-        if not cicle == 0:
+        if not circle == 0:
+            del matrix[0]
+            del matrix[len(matrix)-1]
+            for row in matrix:
+                del row[row_length-1]
+                del row[0]
+            matrix_length = len(matrix)
+            if matrix:
+                row_length = len(matrix[0])
+            else:
+                continue
+
         for i, original_row in enumerate(matrix):
             if i == 0 or i == matrix_length-1:
                 row = [x for x in original_row]
@@ -35,6 +46,6 @@ def rotate_matrix(matrix, matrix_length, row_length):
                         new_matrix[0].insert(length, elm)
 
     return new_matrix
-print matrix
+print rotate_matrix(matrix, M, N)
 for row in rotate_matrix(matrix, M, N):
     print row
