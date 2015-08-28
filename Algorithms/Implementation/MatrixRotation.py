@@ -7,45 +7,70 @@ matrix = []
 for i in range(M):
     matrix.append(input().split())
 
-def rotate_matrix(matrix, matrix_length, row_length):
+def transform_matrix(matrix, matrix_length, row_length):
+
     new_matrix = []
     smallest = min(matrix_length, row_length)
     for circle in range(smallest/2):
-        new_matrix.append([])
+        # print 'round:', circle
+        # print 'before:', matrix
         if not circle == 0:
             del matrix[0]
-            del matrix[len(matrix)-1]
-            for row in matrix:
-                del row[row_length-1]
-                del row[0]
-            matrix_length = len(matrix)
+            del matrix[-1]
+            # print 'del row', matrix
             if matrix:
+                for row in matrix:
+                    del row[-1]
+                    del row[0]
+                matrix_length = len(matrix)
                 row_length = len(matrix[0])
-            else:
+            if not matrix or not matrix[0]:
                 continue
 
-        for i, original_row in enumerate(matrix):
-            if i == 0 or i == matrix_length-1:
-                row = [x for x in original_row]
-                if i == 0:
-                    new_matrix[0]+= row
+        left_array = []
+        right_array = []
+        for idx, row in enumerate(matrix):
+            if not idx == 0:
+                if not idx == matrix_length-1:
+                    left_array.append(row[::-1].pop())
+                    right_array.append(row.pop())
                 else:
-                    index = matrix_length - 2
-                    index = len(new_matrix[0]) - index
-                    for x in row[::-1]:
-                        new_matrix[0].insert(index, x)
-                        index += 1
-            else:
-                for j, elm in enumerate(original_row):
-                    length = len(original_row) - 1
-                    length = row_length+length//2
-                    if j == 0:
-                        new_matrix[0].insert(length, elm)
-                    if j == len(original_row) - 1:
-                        length += 1
-                        new_matrix[0].insert(length, elm)
-
+                    matrix[0] += right_array
+                    matrix[0] += row[::-1]
+                    matrix[0] += left_array[::-1]
+        new_matrix.append(matrix[0])
+        # print new_matrix
     return new_matrix
-print rotate_matrix(matrix, M, N)
-for row in rotate_matrix(matrix, M, N):
-    print row
+
+def rotate_matrix(transform, R):
+    for idx, row in enumerate(transform):
+        for i in range(R%len(row)):
+            transform[idx].append(transform[idx][0])
+            del transform[idx][0]
+    return transform
+
+def reformat_matrix(rotate, matrix_length, row_length):
+    smallest = min(matrix_length, row_length)
+    reformat = []
+    for idx in range(smallest/2):
+
+        if not idx == 0:
+            reformat.append([rotate[idx-1][1].pop()]+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2])
+            print [rotate[idx-1][1].pop()]+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2]
+
+        else:
+            reformat.append(rotate[0][0:row_length])
+            reformat.append(rotate[0][::-1][matrix_length-2:row_length+2])
+
+        right_array = rotate[idx][row_length:row_length+matrix_length-2]
+        left_array = rotate[idx][::-1][row_length:row_length+matrix_length-2][::-1]
+        rotate[idx] = [right_array, left_array]
+
+        row_length -= 2
+        matrix_length -= 2
+
+    # print reformat
+
+
+
+reformat_matrix(rotate_matrix(transform_matrix(matrix, M, N), R), M, N)
