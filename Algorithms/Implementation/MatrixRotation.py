@@ -56,7 +56,7 @@ def reformat_matrix(rotate, matrix_length, row_length):
 
         if not idx == 0:
             reformat.append([rotate[idx-1][1].pop()]+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2])
-            print [rotate[idx-1][1].pop()]+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2]
+            print rotate[idx-1][1].pop()+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2]
 
         else:
             reformat.append(rotate[0][0:row_length])
