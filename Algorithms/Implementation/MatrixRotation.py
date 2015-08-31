@@ -52,12 +52,16 @@ def rotate_matrix(transform, R):
 def reformat_matrix(rotate, matrix_length, row_length):
     smallest = min(matrix_length, row_length)
     reformat = []
+    diff = 2
     for idx in range(smallest/2):
-
+        print '--row length...', row_length
+        print '--matrix length...', matrix_length
         if not idx == 0:
-            reformat.append([rotate[idx-1][1].pop()]+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2])
-            print rotate[idx-1][1].pop()+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2]
-
+            print [rotate[idx-1][1].pop()]+rotate[idx][0:row_length]+[rotate[idx-1][0].pop()]
+            print [rotate[idx-1][1].pop()]\
+            +rotate[idx][::-1][matrix_length-2:row_length]\
+            +[rotate[idx-1][0].pop()]
+            #reformat.append([rotate[idx-1][1].pop()]+rotate[0][0:row_length]+rotate[0][::-1][matrix_length-2:row_length+2])
         else:
             reformat.append(rotate[0][0:row_length])
             reformat.append(rotate[0][::-1][matrix_length-2:row_length+2])
@@ -65,10 +69,8 @@ def reformat_matrix(rotate, matrix_length, row_length):
         right_array = rotate[idx][row_length:row_length+matrix_length-2]
         left_array = rotate[idx][::-1][row_length:row_length+matrix_length-2][::-1]
         rotate[idx] = [right_array, left_array]
-
         row_length -= 2
         matrix_length -= 2
-
     # print reformat
 
 
