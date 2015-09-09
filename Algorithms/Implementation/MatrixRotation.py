@@ -43,7 +43,7 @@ def transform_matrix(matrix, matrix_length, row_length):
                  print row
 
         new_matrix.append(matrix[0])
-        print new_matrix
+        print 'new matrix:\n', new_matrix
     return new_matrix
 
 def rotate_matrix(transform, R):
@@ -57,10 +57,10 @@ def reformat_matrix(rotate, matrix_length, row_length):
     smallest = min(matrix_length, row_length)
     reformat = []
     diff = 2
-    print rotate
+    print 'rotate:\n', rotate
     for idx in range(matrix_length/2):
-        # print '--row length...', row_length
-        # print '--matrix length...', matrix_length
+        print '--row length...', row_length
+        print '--matrix length...', matrix_length
         if not row_length == 0:
             reformat.append(rotate[idx][0:row_length])
             rotate[idx] = rotate[idx][row_length::]
@@ -98,15 +98,7 @@ def reformat_matrix(rotate, matrix_length, row_length):
         matrix_length -= 2
         # print 'rotate: \n',rotate
         # print 'reformat:\n',reformat
-    # if matrix_length > row_length and matrix_length%2 == 1:
-    #     front = []
-    #     back = []
-    #     for pair in rotate:
-    #         front.append(pair[1].pop())
-    #         back.append(pair[0].pop())
-    #     middle = front + back[::-1]
-    #     print middle
-    #     return reformat[::2]+[middle]+reformat[1::2][::-1]
+
 
     return reformat[::2]+reformat[1::2][::-1]
     # print reformat
