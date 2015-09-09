@@ -12,12 +12,12 @@ def transform_matrix(matrix, matrix_length, row_length):
     new_matrix = []
     smallest = min(matrix_length, row_length)
     for circle in range(matrix_length//2):
-        print 'round:', circle
-        print 'before:', matrix
+        # print 'round:', circle
+        # print 'before:', matrix
         if not circle == 0:
             del matrix[0]
             del matrix[-1]
-            print 'del row', matrix
+            # print 'del row', matrix
             if matrix:
                 matrix_length = len(matrix)
                 row_length = len(matrix[0])
@@ -38,12 +38,12 @@ def transform_matrix(matrix, matrix_length, row_length):
                     matrix[0] += row[::-1]
                     matrix[0] += left_array[::-1]
 
-            print '--matrix--'
-            for row in matrix:
-                 print row
+            # print '--matrix--'
+            # for row in matrix:
+            #      print row
 
         new_matrix.append(matrix[0])
-        print 'new matrix:\n', new_matrix
+        # print 'new matrix:\n', new_matrix
     return new_matrix
 
 def rotate_matrix(transform, R):
@@ -57,10 +57,11 @@ def reformat_matrix(rotate, matrix_length, row_length):
     smallest = min(matrix_length, row_length)
     reformat = []
     diff = 2
-    print 'rotate:\n', rotate
-    for idx in range(matrix_length/2):
-        print '--row length...', row_length
-        print '--matrix length...', matrix_length
+    idx = 0
+    # print 'rotate:\n', rotate
+    for idx in range(smallest/2):
+        # print '--row length...', row_length
+        # print '--matrix length...', matrix_length
         if not row_length == 0:
             reformat.append(rotate[idx][0:row_length])
             rotate[idx] = rotate[idx][row_length::]
@@ -94,13 +95,27 @@ def reformat_matrix(rotate, matrix_length, row_length):
         reformat[-1] = bottom
 
         rotate[idx] = [right_array, left_array]
+
         row_length -= 2
         matrix_length -= 2
+
+        middle_part = []
+        if not row_length and matrix_length:
+            for i in range(matrix_length):
+                front = []
+                back = []
+                for j in range(len(rotate)):
+                    if i == 0:
+                        rotate[j][0].reverse()
+                    front.append(rotate[j][1].pop())
+                    back.append(rotate[j][0].pop())
+                middle_part.append(front+back[::-1])
+            # print middle_part
+
         # print 'rotate: \n',rotate
         # print 'reformat:\n',reformat
 
-
-    return reformat[::2]+reformat[1::2][::-1]
+    return reformat[::2]+middle_part+reformat[1::2][::-1]
     # print reformat
 
 
