@@ -1,14 +1,18 @@
 t = int(raw_input())
 
-def BiggerIsFreater(word):
+def BiggerIsGreater(word):
+    #print sorted(word)
+    #print bool("".join(sorted(word)[::-1]) == word)
     if "".join(sorted(word)[::-1]) == word:
         return 'no answer'
     word_list = list(word)
-    for i in range(len(word))[::-1]:
-        current_char = word_list[i]
-        for j in range(len(i+1,word))[::-1]:
-            if current_char > word_list[j]:
-                word_list = word_list[0:j:] + [current_char]
+    for i in range(len(word)-1)[::-1]:
+        for j in range(i,len(word))[::-1]:
+            if word_list[i] < word_list[j]:
+                word_list = word_list[:i:] + [word_list.pop(j)] + sorted(word_list[i::])
+                return "".join(word_list)
 
-
-def switchWords(wordarray, letter):
+for case in range(t):
+    w = raw_input()
+    #print w
+    print BiggerIsGreater(w)
