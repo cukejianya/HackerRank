@@ -24,29 +24,8 @@ def quicksort(ar, front, end):
     right = [bound_idx, end]
     # print "right", right
     ar = quicksort(ar, right[0], right[1])
+
     return ar
-
-
-
-
-
-
-    # left = ar[:bound_idx-1:]
-    # right = ar[bound_idx::]
-    # right_old = [pivot] + right + right_old
-    # print "--Right_old...", right_old
-    # print "--Right...", right
-    # print "Left-before...", left
-    # print "Left_old-before...", left_old
-    # ar = quicksort(left, left_old, right_old)
-    # print "After: ", ar
-    #
-    # left = ar[:bound_idx-1:]
-    # left_old = left_old + left + [pivot]
-    # print "--Left...", left
-    # print "--Left_old...", left_old
-    # ar = quicksort(right, left_old, right_old)
-
 
 n = int(raw_input())
 ar = [int(x) for x in raw_input().split()]
