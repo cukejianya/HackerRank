@@ -1,17 +1,16 @@
 def closest_numbers(ar):
     ret_ar = []
-    x = 0
-    for idx, elm in enumerate(ar):
-        if idx == 0:
-            continue
-        for jdx in range(0, idx)[::-1]:
-            number = abs(elm - ar[idx])
-            if not x and not ret_ar:
-                x = number
-            if number <= x and not number == 0:
-                if number < x:
+    x = ar[0] - ar[1]
+    for idx, elm_x in enumerate(ar[:len(ar)-1]):
+        for elm_y in ar[idx+1:]:
+            num = abs(elm_x - elm_y)
+            if num <= x:
+                if num < x:
                     ret_ar = []
-                ret_ar+=[elm, ar[idx]]
+                    x = num
+                ret_ar+=[elm_x, elm_y]
+
+
     return " ".join([str(x) for x in ret_ar])
 s = int(raw_input());
 ar = [int(x) for x in raw_input().split()];
