@@ -1,7 +1,7 @@
 def almostSorted(ar):
     mini = 0
     maxi = 0
-    ar = [-1]+ar+[1000001]
+    ar = [-1]+ar+[10000001]
     n = len(ar)
     for idx, elm in enumerate(ar):
         #print idx, elm
@@ -9,18 +9,19 @@ def almostSorted(ar):
             continue
         prev = ar[idx - 1]
         nxt = ar[idx + 1]
-        if elm > prev and elm > nxt:
+        if prev < elm and elm > nxt:
             idx_ar = [idx, 0]
             maxi += 1
-        if elm < prev and elm < nxt:
+        if  prev > elm and elm < nxt:
             idx_ar[1] = idx
             mini += 1
-    validate = (ar[idx_ar[1]+1] > ar[idx_ar[0]]);
-    edgeCaseSwap = idx_ar[1]-idx_ar[0] == 1;
-
+    #print ar[idx_ar[1]+1]
     if maxi == 0 and mini == 0:
         return [True, False]
-    elif maxi == 1 and (mini == 2 or (validate and edgeCaseSwap)):
+    validate = (ar[idx_ar[1]+1] > ar[idx_ar[0]]) and \
+        (ar[idx_ar[1]] > ar[idx_ar[0]-1])
+    edgeCaseSwap = idx_ar[1]-idx_ar[0] == 1
+    if maxi == 1 and (mini == 2 or edgeCaseSwap) and validate:
         return [True, "swap", " ".join(str(x) for x in idx_ar)]
     elif maxi == 1 and mini == 1 and validate:
         return [True, "reverse", " ".join(str(ar[x]) for x in idx_ar[::-1])]
