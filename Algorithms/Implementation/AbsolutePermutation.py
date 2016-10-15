@@ -2,6 +2,12 @@ def find_abs_permutation(n, k):
     seen_list = []
     if k > n/2:
         return -1
+    if k is 0:
+        return ' '.join(str(num) for num in range(1, n+1))
+    if n%2 is not 0:
+        return -1
+    if n%k is not 0:
+        return -1
 
     for pos in range(1, n+1):
         higher = pos + k
